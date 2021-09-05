@@ -30,7 +30,7 @@ class _CanvasScreenState extends State<CanvasScreen>
     final size = MediaQuery.of(context).size;
 
     final nodes = List.generate(
-      140,
+      14,
       (index) => f.Node(),
     );
     final r = Random();
@@ -96,7 +96,6 @@ class _CanvasScreenState extends State<CanvasScreen>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Container(
         color: Colors.black,
@@ -114,7 +113,7 @@ class _CanvasScreenState extends State<CanvasScreen>
                         : edgeCounts[node.index!] / maxEdgeCount;
                     return SimulationCanvasObject(
                       weight: weight,
-                      constraints: BoxConstraints.tight(Size(10, 10)),
+                      constraints: BoxConstraints.loose(Size(100, 100)),
                       node: node,
                       edges: [...edges.where((e) => e.source == node)],
                       child: NodeHitTester(
@@ -131,13 +130,14 @@ class _CanvasScreenState extends State<CanvasScreen>
                             ..fy = null;
                         },
                         child: Container(
-                          width: 10,
-                          height: 10,
+                          width: edgeCounts[node.index!].toDouble() * 10,
+                          height: edgeCounts[node.index!].toDouble() * 10,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
+                            border: Border.all(color: Colors.red),
                             color: Colors.white.withOpacity(sqrt(weight)),
                             shape: BoxShape.circle,
                           ),
+                          child: Center(child: Text(edgeCounts[node.index!].toString())),
                         ),
                       ),
                     );
